@@ -10,4 +10,4 @@ const data= [
 //     console.log(alldata);
 // }
 console.log(data[2]);
-console.log(data[5]);
+console.log(data[5].course);
