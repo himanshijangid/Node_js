@@ -6,15 +6,6 @@ const fs = require("fs");
 // }
 
 const requestHandler =(request,response) => {
-
-
-
-
-// const server = http.createServer((request,response) => {
-//     console.log(request.url,request.method);
-
-  
-
     const url = request.url;
     const method = request.method;
     if (url === "/"){
@@ -31,23 +22,26 @@ const requestHandler =(request,response) => {
 
         const body = [];
         request.on("data" , (chunk )=> {
-            console.log(chunk);
+            // console.log(chunk);
             body.push (chunk);
 
         })
         request.on  ("end" , () => {
-            const parseBody = Buffer.concat(body).toString()
-            console.log(parseBody);
-            const message = parseBody.split("=")[1];
+            const parsedBody = Buffer.concat(body).toString()
+            console.log(parsedBody);
+            const message = parsedBody.split("=")[1];
             console.log(message);
+
+            fs.writeFileSync("message.text" , message ,error => {
+            response.statusCode = 302;
+            response.setHeader("location" , "/");
+            return response.end();
         })
+    })
 
 
-
-        fs.writeFileSync("message.text" , "Dummy");
-        response.statusCode = 302;
-        response.setHeader("location" , "/");
-        return response.end();
+       
+   
 
     }
 
