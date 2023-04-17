@@ -1,0 +1,21 @@
+extends layouts/main-layout.pug
+
+block styles 
+    link(rel="stylesheet", href="/css/product.css")
+
+block content
+    main 
+        if prods.length > 0
+            .grid 
+                each product in prods 
+                    article.card.product-item 
+                        header.card_header
+                            h1.product_title #{product.title}
+                        div.card_image
+                            img(src="../images/banana.jpg")
+                        
+                        div.card_content
+                            h2.product_price $19.99
+                            p.product_description A fresh banana.
+                        .card_actions 
+                            button.btn Add to Cart
