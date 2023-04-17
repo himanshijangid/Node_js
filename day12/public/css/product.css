@@ -5,10 +5,13 @@
             margin: auto;
             
         }
-
+        
         .product-item{
+            margin: auto;
             width: 20rem;
+            
             max-width: 95%;
+           
         }
         .product_title{
             font-size: 1.2rem;
