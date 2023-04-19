@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+   
+    <main>
+        {{#if hasProducts}}
+            <div class="grid">
+                {{#each prods}}
+                <article class="card product-item">
+                    <header class="card_header">
+                        <h1 class="product_title"> {{this.title}}</h1>
+                    </header>
+                    <div class="card_image">
+                        <img src="https://cdn3.mydukaan.io/app/image/700x700/?url=https://projecteagle.s3.ap-south-1.amazonaws.com/images/b9e0da5f-42fc-4d73-b422-ec3bc8d96e2e.jpg" alt="image"/>
+                    </div>
+                    <div class="card_content">
+                        <h2 class="product_price">₹60.00</h2>
+                        <p class="product_description">A fresh banana.</p>
+                    </div>
+                    <div class="card_actions">
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </article>
+                {{/each}}
+            </div>
+        {{else}} 
+            <h1>No Products Found !</h1>
+        {{/if}}
+        
+    </main>
+</body>
+</html>
