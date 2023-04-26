@@ -1,14 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600&family=Play:wght@700&family=Playfair+Display:wght@700&display=swap');
-
-  *{
-    box-sizing: border-box;
-  }
+rgb(253,0,118)
+* {
+  box-sizing: border-box;
+}
 
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Nunito Sans';
-  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
 }
 
 main {
@@ -23,87 +21,78 @@ main {
   padding: 0 1.5rem;
 }
 
-.main-header_nav {
+.main-header__nav {
   height: 100%;
   display: flex;
   align-items: center;
- 
- 
-  
 }
 
-.main-header_item-list {
+.main-header__item-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  
 }
 
-.main-header_item {
+.main-header__item {
   margin: 0 1rem;
   padding: 0;
- 
 }
 
-.main-header_item a {
+.main-header__item a {
   text-decoration: none;
   color: white;
-  font-weight: bold;
-  margin: 10px;
-
 }
 
-
-.main-header_item a:hover,
-.main-header_item a:active,
-.main-header_item a.active {
+.main-header__item a:hover,
+.main-header__item a:active,
+.main-header__item a.active {
   color: black;
 }
 
-.grid{
+.grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: stretch;
 }
 
-.card{
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);;
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
-.card_header,
-.card_content{
-  padding: 1rem
+.card__header,
+.card__content {
+  padding: 1rem;
 }
 
-.card_header h1,
-.card_content h1,
-.card_content h2,
-.card_content p{
+.card__header h1,
+.card__content h1,
+.card__content h2,
+.card__content p {
   margin: 0;
 }
 
-.card_image{
-  width: 100%
-}
-
-.card_image img{
+.card__image {
   width: 100%;
 }
 
-.card_actions{
-  padding: 1rem;
-  text-align: center;
+.card__image img {
+  width: 100%;
 }
 
-.card_actions button,
-.card_actions a{
-  margin: 0 0.25rem;
+.card__actions {
+    padding: 1rem;
+    text-align: center;
 }
 
-.btn{
-  font:inherit;
+.card__actions button,
+.card__actions a {
+    margin: 0 0.25rem;
+}
+
+.btn {
+  font: inherit;
   border: 1px solid rgb(253,0,118);
   color: rgb(253,0,118);
   background: white;
@@ -112,7 +101,7 @@ main {
 }
 
 .btn:hover,
-.btn:active{
-  background-color:rgb(253,0,118);
+.btn:active {
+  background-color: rgb(253,0,118);
   color: white;
 }
