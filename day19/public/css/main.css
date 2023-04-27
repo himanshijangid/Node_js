@@ -105,3 +105,19 @@ main {
   background-color: rgb(253,0,118);
   color: white;
 }
+
+.card-action a {
+  font: inherit;
+  border: 1px solid rgb(253,0,118);
+  color: rgb(253,0,118);
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.card-action a:hover
+ {
+  background-color: rgb(253,0,118);
+  color: white;
+}
