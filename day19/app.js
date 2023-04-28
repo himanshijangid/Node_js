@@ -21,5 +21,5 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(8080);
-console.log('Server listening on : 8080');
+app.listen(3000);
+console.log('Server is listening: 3000');
