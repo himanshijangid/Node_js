@@ -14,6 +14,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -23,12 +24,11 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 sequelize
-.sync().
-then(result => {
-    console.log(result)
-    
-})
-.catch(error => { console.log(error) })
+    .sync()
+    .then(result => {
+        console.log('server started')
+        app.listen(8000);
+        console.log('Server is listen on Port: 8000');
+    })
+    .catch(err => { console.log(err) })
 
-app.listen(3000);
-console.log('Server is listening: 3000');
