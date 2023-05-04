@@ -20,7 +20,8 @@ exports.postAddProduct = (req, res, next) => {
         price,
         description );
 
-    product.save().then(() => {
+    product.save()
+    .then(() => {
         res.redirect('/')
     }).catch(error => console.log(error));
     ;
