@@ -4,15 +4,15 @@ const Cart = require('../models/cart');
 
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll() 
-  .then(([rows,fieldData]) => {
-       res.render('shop/product-list', {
-      prods: rows,
-      pageTitle: 'All Products',
-      path: '/products',
+  Product.findAll()
+    .then(products => {
+      res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'All Products',
+        path: '/products'
+      });
     })
-  })
-  .catch(error => console.log(error))
+    .catch(err => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -49,10 +49,10 @@ exports.getCart = (req, res, next) => {
   Cart.getCart(cart => {
     Product.fetchAll(products => {
       const cartProducts = [];
-      for (product of products) {
-        const cartProductData = cart.products.find(prod => prod.id === product.id);
+      for (Product of products) {
+        const cartProductData = cart.products.find(prod => prod.id === Product.id);
         if (cartProductData) {
-          cartProducts.push({productData: product, qty:cartProductData.qty});
+          cartProducts.push({productData: Product, qty:cartProductData.qty});
         }
       }
       res.render('shop/cart', {
