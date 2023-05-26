@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
-const User = require('./models/user')
+const User = require('./models/user');
 const mongoConnect = require('./util/database').mongoConnect;
 
 const app = express();
@@ -17,13 +17,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findById('646c9480f2e5740f7e2f9816')
+  User.findById('646f2f3972c5ed7ccf8a16e2')
     .then(user => {
-      req.user = new User (user.name ,user.email, user.cart , user._id)
-    next();
+      req.user = new User(user.name, user.email, user.cart, user._id);
+      next();
     })
     .catch(err => console.log(err));
-  
 });
 
 app.use('/admin', adminRoutes);
@@ -32,7 +31,6 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 mongoConnect(() => {
-    console.log('server listen on port:5000');
-  app.listen(5000);
-
+  app.listen(3000);
+  console.log('sever listen on port : 3000');
 })

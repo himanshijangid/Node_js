@@ -28,33 +28,31 @@ class Product {
       .catch(err => console.log(err))
   }
 
-
-   static fetchAll(){
+  static fetchAll() {
     const db = getDb();
     return db.collection('products')
-    .find()
-    .toArray()
-    .then(products => {
-      return products;
-    })
-    .catch(error => console.log(error))
-   }
+      .find()
+      .toArray()
+      .then(products => {
+        // console.log(products);
+        return products;
+      })
+      .catch(err => console.log(err));
+  }
 
-   static findById(prodId){
+  static findById(prodId) {
     const db = getDb();
     return db
-    .collection('products')
-    .find({_id:new mongodb.ObjectId(prodId)})
-    .next()
-    .then(product => {
-      return product;
+      .collection('products')
+      .find({ _id: new mongodb.ObjectId(prodId) })
+      .next()
+      .then(product => {
+        return product
+      })
+      .catch(err => console.log(err));
+  }
 
-    })
-    .catch(error => console.log(error));
-   }
-
-
-   static deleteById(prodId) {
+  static deleteById(prodId) {
     const db = getDb();
     return db
       .collection('products')
@@ -65,4 +63,7 @@ class Product {
       .catch(err => console.log(err));
   }
 }
-module.exports = Product;
+
+
+
+module.exports = Product
