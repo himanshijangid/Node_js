@@ -215,6 +215,15 @@ form {
   background: red;
   color: white;
 }
+.btn.primary{
+  color :rgb(5, 82, 5);
+  border-color: rgb(5, 82, 5);
+}
+.btn.primary:hover,
+.btn.primary:active {
+  background: rgb(5, 82, 5);
+  color: white;
+}
 
 @media (min-width: 768px) {
   .main-header__nav {
