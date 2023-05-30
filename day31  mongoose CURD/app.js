@@ -17,14 +17,14 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-  // User.findById('646f2f3972c5ed7ccf8a16e2')
-  //   .then(user => {
-  //     req.user = new User(user.name, user.email, user.cart, user._id);
-  //     next();
-  //   })
-  //   .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById('64709133c39bc2464ca20d62')
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -33,8 +33,19 @@ app.use(errorController.get404);
 
 mongoose.connect('mongodb+srv://himanshijangid444:himanshijangid444@cluster0.m0npxln.mongodb.net/shop?retryWrites=true&w=majority')
 .then(result => {
+  User.findOne().then(user => {
+    if (!user) {
+      const user = new User({
+        name: 'Ram',
+        email: 'ram@gmail.com',
+        cart: {
+          items: []
+        }
+      });
+      user.save();
+    }
+  });
   app.listen(3000);
-  console.log('sever listen on port : 3000 ');
-
+  console.log('Database Connected...')
 })
-.catch(error => console.log(error));
+.catch(err => { console.log(err) })
