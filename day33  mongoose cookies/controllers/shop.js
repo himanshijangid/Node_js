@@ -53,7 +53,8 @@ exports.getCart = (req, res, next) => {
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: products
+        products: products,
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -116,7 +117,8 @@ Order.find( {
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders
+        orders: orders,
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch(err => console.log(err));
