@@ -8,12 +8,12 @@ exports.getLogin = (req, res, next) => {
 }
 
 exports.postLogin = (req, res, next) => {
-    User.findById('6475daf920fc988a472c1a0c')
+    User.findById('646f43d0a55fc76aaf5a4e70')
         .then(user => {
             req.session.isLoggedIn = true;
             req.session.user = user;
-            req.session.save(error => {
-                console.log(error);
+            req.session.save(err => {
+                console.log(err);
                 res.redirect('/');
             });
         })
@@ -21,8 +21,8 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.postLogout = (req, res, next) => {
-    req.session.destroy(error => {
-        console.log(error);
+    req.session.destroy(err => {
+        console.log(err);
         res.redirect('/');
     })
 }
