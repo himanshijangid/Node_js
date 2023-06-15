@@ -4,13 +4,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 
 
 const app = express();
+
 require('dotenv').config();
 
 const store = new MongoDBStore({
@@ -63,7 +63,7 @@ mongoose
     User.findOne().then(user => {
       if (!user) {
         const user = new User({
-          name: 'Ram',    
+          name: 'Ram',
           email: 'ram@gmail.com',
           cart: {
             items: []
