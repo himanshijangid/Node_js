@@ -45,7 +45,7 @@ mongoose.connect('mongodb+srv://himanshijangid444:himanshijangid444@cluster0.m0n
       user.save();
     }
   });
-  app.listen(3000);
+  app.listen(4000);
   console.log('Database Connected...')
 })
 .catch(err => { console.log(err) })
