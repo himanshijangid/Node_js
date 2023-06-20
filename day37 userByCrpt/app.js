@@ -58,18 +58,6 @@ app.use(errorController.get404);
 mongoose
   .connect(process.env.MONGODB_CONNECT_URI)
   .then(result => {
-    User.findOne().then(user => {
-      if (!user) {
-        const user = new User({
-          name: 'Ram',
-          email: 'ram@gmail.com',
-          cart: {
-            items: []
-          }
-        });
-        user.save();
-      }
-    });
     const PORT = process.env.PORT
     app.listen(PORT);
     console.log('Database Connected...')
