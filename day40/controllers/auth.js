@@ -1,5 +1,14 @@
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const User = require('../models/user');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
+// const transporter = nodemailer.createTransport(sendgridTransport({
+//     auth:{
+//         api_key: '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'
+//     }
+// }))
 exports.getLogin = (req, res, next) => {
    let message = req.flash('error');
    if(message.length > 0) {
@@ -99,7 +108,7 @@ exports.postLogout = (req, res, next) => {
         res.redirect('/');
     })
 }
-exports.postReset = (req, res, next) => {
+exports.getReset = (req, res, next) => {
     let message = req.flash('error');
     if (message.length > 0) {
         message = message[0];
@@ -112,4 +121,35 @@ exports.postReset = (req, res, next) => {
     pageTitle: 'Password Reset',
     errorMessage: message
    })
+}
+
+exports.postReset = (req, res, next ) => {
+    crypto.randomBytes(32,(error , buffer) => {
+        if(error) {
+            console.log(error);
+            return res.redirect('/reset')
+        }
+        const token =buffer.toString('hex')
+        User.findOne({email : req.body.email})
+            .then(user => {
+                if(!user){
+                    req.flash('error', 'no account with that email found')
+                    return res.redirect('/reset');
+                }
+                user.resetToken = token;
+                user.resetTokenExpiration = Date.now() + 3600000;
+                return user.save()
+            })
+            // .then(result => {
+            //     transporter.sendMail({
+            //         to: req.body.email,
+            //         from : 'hello@aeeron.in',
+            //         subject : 'Password Reset',
+            //         html : `
+            //         <p> You requested a password </p>
+            //         <p>Click this<a href ="http://localhost:5000/reset/${token}">Link</a> to set a new password.</p>`
+            //     })
+            // })
+            .catch(error => console.log(error))
+    })
 }
