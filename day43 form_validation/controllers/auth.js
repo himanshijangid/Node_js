@@ -23,11 +23,11 @@ exports.getLogin = (req, res, next) => {
         path: '/login',
         pageTitle: 'Login',
         errorMessage: message,
-        oldInput : {
-            email : '',
-            password :'', 
+        oldInput: {
+            email:'',
+            password: ''
         },
-        validationErrors : []
+        validationErrors: []
     });
 }
 
@@ -41,59 +41,52 @@ exports.getSignup = (req, res, next) => {
     res.render('auth/signup', {
         path: '/signup',
         pageTitle: 'Signup',
-        errorMessage:message,
-        oldInput : {
-            email : '',
-            password :'',
-            confirmPassword : ''
-
+        errorMessage: message,
+        oldInput: {
+            email: '',
+            password: '',
+            confirmPassword: ''
         },
-        validationErrors : []
-
+        validationErrors: []
     });
 }
 
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors.array());
         return res.status(422).render('auth/login', {
             path: '/login',
             pageTitle: 'Login',
-            errorMessage:'Invaild/Empty E-mail or password',
-            oldInput :{
-                email : email,
-                password : password
-               
+            errorMessage: 'Invalid email or password',
+            oldInput: {
+                email: email,
+                password: password
             },
-            validationErrors : errors.array()
-
+            validationErrors: errors.array()
         });
     }
+
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                console.log(errors.array());
                 return res.status(422).render('auth/login', {
                     path: '/login',
                     pageTitle: 'Login',
-                    errorMessage:'Invaild/Empty E-mail or password.',
-                    oldInput :{
-                        email : email,
-                        password : password,
-                        
+                    errorMessage: 'Invalid email or password',
+                    oldInput: {
+                        email: email,
+                        password: password
                     },
-                    validationErrors : errors.array()
-        
+                    validationErrors: errors.array()
                 });
             }
             bcrypt
                 .compare(password, user.password)
                 .then(doMatch => {
                     if (doMatch) {
-                        console.log(errors.array());
                         req.session.isLoggedIn = true;
                         req.session.user = user;
                         return req.session.save(err => {
@@ -104,14 +97,12 @@ exports.postLogin = (req, res, next) => {
                     return res.status(422).render('auth/login', {
                         path: '/login',
                         pageTitle: 'Login',
-                        errorMessage: 'Invaild/Empty E-mail or password.',
-                        oldInput :{
-                            email : email,
-                            password : password,
-                            confirmPassword :confirmPassword
+                        errorMessage: 'Invalid email or password',
+                        oldInput: {
+                            email: email,
+                            password: password
                         },
-                        validationErrors : errors.array()
-            
+                        validationErrors: errors.array()
                     });
                 })
         })
@@ -121,7 +112,7 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
+    
     
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -130,16 +121,14 @@ exports.postSignup = (req, res, next) => {
             path: '/signup',
             pageTitle: 'Signup',
             errorMessage: errors.array()[0].msg,
-            oldInput :{
-                email : email,
-                password : password,
-                confirmPassword :confirmPassword
+            oldInput: {
+                email: email,
+                password: password,
+                confirmPassword: req.body.confirmPassword
             },
-            validationErrors : errors.array()
-
+            validationErrors: errors.array()
         });
     }
-  
             return bcrypt
                 .hash(password, 12)
                 .then(hashedPassword => {
@@ -158,8 +147,7 @@ exports.postSignup = (req, res, next) => {
                 html: '<h1> You successfully signed up!</h1>'
             })
     }).catch(err=>console.log(err))
- }
-
+ };
 
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
