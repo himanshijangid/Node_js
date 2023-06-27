@@ -22,7 +22,12 @@ exports.getLogin = (req, res, next) => {
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Login',
-        errorMessage: message
+        errorMessage: message,
+        oldInput : {
+            email : '',
+            password :'', 
+        },
+        validationErrors : []
     });
 }
 
@@ -36,23 +41,59 @@ exports.getSignup = (req, res, next) => {
     res.render('auth/signup', {
         path: '/signup',
         pageTitle: 'Signup',
-        errorMessage:message
+        errorMessage:message,
+        oldInput : {
+            email : '',
+            password :'',
+            confirmPassword : ''
+
+        },
+        validationErrors : []
+
     });
 }
 
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).render('auth/login', {
+            path: '/login',
+            pageTitle: 'Login',
+            errorMessage:'Invaild/Empty E-mail or password',
+            oldInput :{
+                email : email,
+                password : password
+               
+            },
+            validationErrors : errors.array()
+
+        });
+    }
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                req.flash('error', 'Email not in Database.');
-                return res.redirect('/login');
+                console.log(errors.array());
+                return res.status(422).render('auth/login', {
+                    path: '/login',
+                    pageTitle: 'Login',
+                    errorMessage:'Invaild/Empty E-mail or password.',
+                    oldInput :{
+                        email : email,
+                        password : password,
+                        
+                    },
+                    validationErrors : errors.array()
+        
+                });
             }
             bcrypt
                 .compare(password, user.password)
                 .then(doMatch => {
                     if (doMatch) {
+                        console.log(errors.array());
                         req.session.isLoggedIn = true;
                         req.session.user = user;
                         return req.session.save(err => {
@@ -60,8 +101,18 @@ exports.postLogin = (req, res, next) => {
                             res.redirect('/');
                         });
                     }
-                    req.flash('error', 'Incorrect password.');
-                    return res.redirect('/login');
+                    return res.status(422).render('auth/login', {
+                        path: '/login',
+                        pageTitle: 'Login',
+                        errorMessage: 'Invaild/Empty E-mail or password.',
+                        oldInput :{
+                            email : email,
+                            password : password,
+                            confirmPassword :confirmPassword
+                        },
+                        validationErrors : errors.array()
+            
+                    });
                 })
         })
         .catch(err => console.log(err));
@@ -70,7 +121,7 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    // const confirmPassword = req.body.confirmPassword;
+    const confirmPassword = req.body.confirmPassword;
     
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -78,15 +129,17 @@ exports.postSignup = (req, res, next) => {
         return res.status(422).render('auth/signup', {
             path: '/signup',
             pageTitle: 'Signup',
-            errorMessage: errors.array()[0].msg
+            errorMessage: errors.array()[0].msg,
+            oldInput :{
+                email : email,
+                password : password,
+                confirmPassword :confirmPassword
+            },
+            validationErrors : errors.array()
+
         });
     }
-    // User.findOne({ email: email })
-    //     .then(userDoc => {
-    //         if (userDoc) {
-    //         req.flash('error', 'E-Mail already exists, take different one.')
-    //         return res.redirect('/signup');
-    //     }
+  
             return bcrypt
                 .hash(password, 12)
                 .then(hashedPassword => {

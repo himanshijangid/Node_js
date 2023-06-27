@@ -27,3 +27,6 @@ main{
 .form-control textarea{
     outline-color:rgb(253,0,118);
 }
+.form-control input.invalid{
+    border-color: blue;
+}
