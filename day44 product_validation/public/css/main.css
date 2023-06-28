@@ -227,10 +227,10 @@ form {
 .user-message{
   margin: 10px auto;
   width: 90%;
-  border: 1px solid #4771fa;
+  border: 1px solid rgba(255, 0, 119, 0.804);
   padding: 1rem;
   border-radius: 3px;
-  background: #b9c9ff;
+  background:  rgb(255,176,176);
   text-align: center;
 }
 
