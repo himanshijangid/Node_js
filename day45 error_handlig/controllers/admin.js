@@ -1,5 +1,5 @@
 const mongodb = require('mongodb');
-
+const mongoose = require('mongoose');
 const ObjectId = mongodb.ObjectId;
 const { validationResult } = require('express-validator');
 const Product = require('../models/product');
@@ -24,9 +24,9 @@ exports.postAddProduct = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     console.log(errors.array());
-    return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
+    return res.status(422).render('admin/add-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
       editing: false,
       hasError: true,
       product:{
@@ -35,15 +35,15 @@ exports.postAddProduct = (req, res, next) => {
         description: description,
         imageUrl: imageUrl,
       },
-      validationErrors: [],
-      errorMessage: errors.array()[0].msg,
+      errorMessage: 'Database operation failed, please try again.',
       isAuthenticated: req.session.isLoggedIn
-    })
+    });
   }
 
 
 
   const product = new Product({
+    _id: new mongoose.Types.ObjectId('648af9914380f2129b9be99c'),
     title: title, 
     price: price,
     description: description,
@@ -58,7 +58,9 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => {
-      console.log(err);
+      // console.log('An error from mongodb database');
+      // console.log(err);
+      res.redirect('/500');
     });
 };
 
@@ -79,10 +81,9 @@ exports.getEditProduct = (req, res, next) => {
         editing: editMode,
         product: product,
         hasError: false,
-        errorMessage: null,
-        isAuthenticated: req.session.isLoggedIn,
+        errorMessage: 'Database operation failed, please try again.',
+        isAuthenticated: req.session.isLoggedIn
       });
-      validationErrors: []
     })
     .catch(err => console.log(err));
 };
